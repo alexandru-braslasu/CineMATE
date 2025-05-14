@@ -20,7 +20,7 @@ public class FilmService {
         return filmRepo.findById(id);
     }
 
-    public List<Film> findAllByIds(List<String> ids) {
+    public Iterable<Film> findAllByIds(List<String> ids) {
         return filmRepo.findAllById(ids);
     }
 

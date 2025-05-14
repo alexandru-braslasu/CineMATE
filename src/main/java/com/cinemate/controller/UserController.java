@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/list")
-    public List<Film> getPersonalList(@PathVariable String userId) {
+    public Iterable<Film> getPersonalList(@PathVariable String userId) {
         User user = userService.getById(userId).orElseThrow();
         return filmService.findAllByIds(user.getPersonalList());
     }

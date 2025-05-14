@@ -3,6 +3,7 @@ package com.cinemate.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,12 +38,14 @@ public class SecurityConfig extends org.springframework.security.config.annotati
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/api/auth/**").permitAll()
-            .antMatchers("/api/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/films/adaugaFilm").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/ratings/oferaRating").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/films/eliminareFilm/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/films/**").permitAll()
+                .anyRequest().authenticated();
     }
+
 }

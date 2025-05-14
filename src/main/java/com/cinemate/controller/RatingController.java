@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class RatingController {
     @Autowired private RatingService ratingService;
 
-    @PostMapping
+    @PostMapping("/oferaRating")
     public Rating rate(@RequestBody Rating rating) {
         return ratingService.addRating(rating);
     }
